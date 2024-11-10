@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+
 interface SearchApiResponse {
   kind: string;
   items: ResultsApiResponse[];
@@ -8,15 +9,16 @@ interface SearchApiResponse {
       {
         title: string | null,
         searchTerms: string
-  
+
       }
     ]
   }
 }
 
 interface ResultsApiResponse {
-    title: string;
-    link: string;
+  title: string;
+  link: string;
+  apiSource: "Google" | "Yahoo" | "Yandex";
 }
 
 const responseRef = ref<SearchApiResponse | undefined>(undefined);
@@ -34,11 +36,34 @@ const searchResults = async (query: string) => {
       console.log('query is ', query)
       query = `q=${query}`;
       //It is not empty, add results to a list 
-      let data = await $fetch<SearchApiResponse>(`/api/googlefake?${query}`);
-      data.items = data.items.filter((item) => item.title && item.link);
-      responseRef.value = data;
-      console.log(data.items);
+      let googleData = await $fetch<SearchApiResponse>(`/api/googlefake?${query}`);
+      googleData.items = googleData.items.filter((item) => item.title && item.link)
+        .map((item) => ({
+          ...item,
+          apiSource: 'Google'
+        }));
+      console.log(googleData.items);
 
+      let serpapiData = await $fetch<SearchApiResponse>(`/api/serpapifake?${query}`);
+      serpapiData.items = serpapiData.items.filter((item) => item.title && item.link)
+      .map((item) => ({
+          ...item,
+          apiSource: 'Yahoo'
+        }));
+      console.log(serpapiData.items)
+      responseRef.value = {
+        kind: "customsearch#combined",
+        items: [
+          ...googleData.items, ...serpapiData.items],
+        queries: {
+          request: [
+            {
+              title: `Combined search for ${query}`,
+              searchTerms: query,
+            },
+          ],
+        },
+      };
     } else {
       console.log('empty')
       return "Please input something";
@@ -49,6 +74,10 @@ const searchResults = async (query: string) => {
   }
 }
 
+
+function item(value: ResultsApiResponse, index: number, array: ResultsApiResponse[]): ResultsApiResponse {
+  throw new Error('Function not implemented.');
+}
 </script>
 
 <template>
@@ -80,7 +109,7 @@ const searchResults = async (query: string) => {
       <div v-if="!!responseRef">
         <div class="bg-orange-500 p-6 rounded-s text-white bg-opacity-50 ">
           <div v-for="item in responseRef.items" class="text-white">
-            {{ item.title }}  {{ item.link }}
+            {{ item.apiSource }} {{ '-' }} {{ item.title }} {{ item.link }}
           </div>
         </div>
 

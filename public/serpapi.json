@@ -1,0 +1,214 @@
+{
+    "kind": "customsearch#search",
+    "url": {
+        "type": "application/json",
+        "template": "https://search.yahoo.com/search?p={searchTerms}&n={count?}&b={startIndex?}&pz={language?}&fr={safe?}&rz={cx?}&sos={sort?}&filter={filter?}&gl={gl?}&cr={cr?}&host={yahooHost?}&disable={disableCnTwTranslation?}&hq={hq?}&hl={hl?}&siteSearch={siteSearch?}&siteSearchFilter={siteSearchFilter?}&exactTerms={exactTerms?}&excludeTerms={excludeTerms?}&linkSite={linkSite?}&orTerms={orTerms?}&dateRestrict={dateRestrict?}&lowRange={lowRange?}&highRange={highRange?}&searchType={searchType}&fileType={fileType?}&rights={rights?}&imgSize={imgSize?}&imgType={imgType?}&imgColorType={imgColorType?}&imgDominantColor={imgDominantColor?}&alt=json"
+    },
+    "queries": {
+        "request": [
+            {
+                "title": "Yahoo Search - test",
+                "totalResults": "15700000000",
+                "searchTerms": "test",
+                "count": 10,
+                "startIndex": 1,
+                "inputEncoding": "utf8",
+                "outputEncoding": "utf8",
+                "safe": "off",
+                "cx": "8194329901e7c4e5b"
+            }
+        ],
+        "nextPage": [
+            {
+                "title": "Yahoo Search - test - page 2",
+                "totalResults": "15700000000",
+                "searchTerms": "test",
+                "count": 10,
+                "startIndex": 11,
+                "inputEncoding": "utf8",
+                "outputEncoding": "utf8",
+                "safe": "off",
+                "cx": "8194329901e7c4e5b"
+            }
+        ]
+    },
+    "context": {
+        "title": "FontysProjectSearch"
+    },
+    "searchInformation": {
+        "searchTime": 0.337328,
+        "formattedSearchTime": "0.34",
+        "totalResults": "15700000000",
+        "formattedTotalResults": "15,700,000,000"
+    },
+    "items": [
+        {
+            "kind": "customsearch#result",
+            "title": "Speedtest by Ookla - The Global Broadband Speed Test",
+            "link": "https://www.speedtest.net/run",
+            "displayLink": "www.speedtest.net",
+            "snippet": "Use Speedtest on all your devices with our free desktop and mobile apps.",
+            "formattedUrl": "https://www.speedtest.net/",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcZGIGVTemTJBVmjcfWkS1oSx-MF4nt6RqzRze3I7sgxKxvVyovoD0&s=0",
+                        "width": "123",
+                        "height": "64"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Internet Speed Test | Fast.com",
+            "link": "https://fast.com/",
+            "displayLink": "fast.com",
+            "snippet": "How fast is your download speed? In seconds, FAST.com's simple Internet speed test will estimate your ISP speed.",
+            "formattedUrl": "https://fast.com/",
+            "pagemap": {
+                "metatags": [
+                    {
+                        "og:image": "https://fast.com/assets/share/fb_en_____share_shot___.png"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Test Definition & Meaning - Merriam-Webster",
+            "link": "https://www.merriam-webster.com/dictionary/test",
+            "displayLink": "www.merriam-webster.com",
+            "snippet": "The meaning of TEST is a means of testing. How to use test in a sentence.",
+            "formattedUrl": "https://www.merriam-webster.com/dictionary/test",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSKksTSKYwpW8It403nrjw5t1_a8pLO2PI6ImEG7uvFrNfacgiziPZgG-_O&s",
+                        "width": "225",
+                        "height": "225"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Internet Speed Test - Check Your Internet Speed",
+            "link": "https://www.highspeedinternet.com/tools/speed-test",
+            "displayLink": "www.highspeedinternet.com",
+            "snippet": "Use this speed test tool to check your internet connection speed and troubleshoot network issues.",
+            "formattedUrl": "https://www.highspeedinternet.com/tools/speed-test",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-PfqRcd4dOdRzmnH4tQmCvMbs_L7mNOEgyqVvQHRsPVhvGfBR5s1vhQ&s",
+                        "width": "128",
+                        "height": "128"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "TEST Definition & Meaning | Dictionary.com",
+            "link": "https://www.dictionary.com/browse/test",
+            "displayLink": "www.dictionary.com",
+            "snippet": "A test is a procedure for measuring something, such as knowledge, skill, or aptitude.",
+            "formattedUrl": "https://www.dictionary.com/browse/test",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCaZZgqgEZtWsyXt3XaHfLgk14mCGqUw1mWAmW9q_B4AF0TLq4Q&s",
+                        "width": "160",
+                        "height": "160"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Internet Speed Test - Measure Network Performance | Cloudflare",
+            "link": "https://speed.cloudflare.com/",
+            "displayLink": "speed.cloudflare.com",
+            "snippet": "Test your internet connection speed with Cloudflare's easy-to-use tool.",
+            "formattedUrl": "https://speed.cloudflare.com/",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHF5x6yQvhGZMjZgwUt5MoxuUGgaUjqw8QF2SFCrRzwcPQs9ykCRw&s",
+                        "width": "128",
+                        "height": "128"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "TEST | English meaning - Cambridge Dictionary",
+            "link": "https://dictionary.cambridge.org/dictionary/english/test",
+            "displayLink": "dictionary.cambridge.org",
+            "snippet": "Meaning of test in English: a procedure intended to establish the quality, performance, or reliability of something.",
+            "formattedUrl": "https://dictionary.cambridge.org/dictionary/english/test",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT-jktjjH4r5zThqllW1ONxUtPRtd3ZT9bFUm8uZuaZj-3K5-_RqbVfSxkQ&s",
+                        "width": "200",
+                        "height": "200"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Take a Test",
+            "link": "https://implicit.harvard.edu/implicit/takeatest.html",
+            "displayLink": "implicit.harvard.edu",
+            "snippet": "Select an Implicit Association Test (IAT) from a list of possible topics. We'll also ask you (optionally) to report your attitudes or beliefs about these topics.",
+            "formattedUrl": "https://implicit.harvard.edu/implicit/takeatest.html",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO7QFGhHquvhz4w3V9gWszGrWnWvLSZ7z5s6hHWQ8WzB9qfA6Pq9F2hrjQ&s",
+                        "width": "160",
+                        "height": "160"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Test Your Knowledge: The Ultimate Test",
+            "link": "https://www.proprofs.com/quiz-school/story.php?title=the-ultimate-test",
+            "displayLink": "www.proprofs.com",
+            "snippet": "Think you're smart? Test your knowledge with this ultimate quiz.",
+            "formattedUrl": "https://www.proprofs.com/quiz-school/story.php?title=the-ultimate-test",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwpp9lqkiW5T2izY_Vz_wZYAnES3pcBdA4M2iMnw8aOmtjXMmItfJe1Q&s",
+                        "width": "120",
+                        "height": "120"
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "customsearch#result",
+            "title": "Free Online Tests & Quizzes | ProProfs",
+            "link": "https://www.proprofs.com/quiz-school/",
+            "displayLink": "www.proprofs.com",
+            "snippet": "Take free online quizzes on any topic and test your knowledge.",
+            "formattedUrl": "https://www.proprofs.com/quiz-school/",
+            "pagemap": {
+                "cse_thumbnail": [
+                    {
+                        "src": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYv9P2tmTSu8--sw5py_MV-72rtnEZ2nNx5fIAd2-K_6l41HkEjRk10bgo&s",
+                        "width": "200",
+                        "height": "200"
+                    }
+                ]
+            }
+        }
+    ]
+}
