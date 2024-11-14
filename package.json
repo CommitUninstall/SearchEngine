@@ -13,7 +13,9 @@
     "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "^2.18.7",
     "@nuxtjs/google-fonts": "^3.2.0",
+    "haveibeenpwned": "^1.1.0",
     "nuxt": "^3.13.0",
+    "p5": "^1.11.1",
     "serpapi": "^2.1.0",
     "vue": "latest",
     "vue-router": "latest"

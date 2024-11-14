@@ -13,7 +13,6 @@ export default defineEventHandler(async (event) => {
     });
 
     const transformedResponse = {
-      kind: "customsearch#search",
       items: response.organic_results.map((result: any) => ({
         title: result.title,
         link: result.link,
