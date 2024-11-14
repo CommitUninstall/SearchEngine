@@ -8,8 +8,8 @@ Moreover, the goals of this project are extended. I am in the process of learnin
 
 ## Prerequisites
 
-- Nuxt
-- NodeJS
+- NodeJS  22.11.0
+- Nuxt 10.9.0
 
 # Nuxt 3 Minimal Starter
 
