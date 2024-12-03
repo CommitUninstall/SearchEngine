@@ -13,7 +13,8 @@ export default defineEventHandler(async (event) => {
     });
 
     const transformedResponse = {
-      items: response.organic_results.map((result: any) => ({
+      apiSource: "Yahoo",
+      items: response.omrganic_results.map((result: any) => ({
         title: result.title,
         link: result.link,
       })),

@@ -1,127 +1,93 @@
 <script setup lang="ts">
-
 interface SearchApiResponse {
-  items: ResultsApiResponse[];
-  queries: {
-    request: [
-      {
-        title: string | null,
-        searchTerms: string
-
-      }
-    ]
-  }
+  items: ResultsApiResponse[]
 }
 
 interface ResultsApiResponse {
-  title: string;
-  link: string;
-  apiSource: "Google" | "Yahoo" | "Yandex";
+  title: string,
+  link: string,
+  apiSource: string
 }
-
 
 interface BreachApiResponse {
   breaches: [[string]],
   email: string,
 }
 
-
 const breachResponse = ref<BreachApiResponse | undefined>(undefined);
-const responseRef = ref<SearchApiResponse | undefined>(undefined);
-const textbox = ref('spyrouzoe@gmail.com');
-const errorMessage = ref('');
+const searchAPIResponseRef = ref<SearchApiResponse | undefined>(undefined);
+
+const emailInput = ref('spyrouzoe@gmail.com');
+const errorMessage = ref<string | undefined>(undefined);
+
 const resultsSection = ref<HTMLElement | null>(null);
 const resultsContainer = ref<HTMLElement | null>(null);
-const containerHeight = ref('100%');
 
 const checkEmail = async (query: string) => {
+  errorMessage.value = undefined;
+
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  if (emailRegex.test(query)) {
-    const response: any = await $fetch(`/api/xposedornot?email=${query}`,
-      {
-        ignoreResponseError: true,
-      }
-    );
-    console.log("Reponse is", response);
-    // breachResponse.value = data.value; // Update breachResponse with the fetched data (an array)
-    if (response.statusCode && response.statusCode !== 200) {
-      console.log('No breaches found');
-      errorMessage.value = 'No breaches found'; // Error handling for no breaches found
-      breachResponse.value = undefined;
-    } else {
-      breachResponse.value = response;
-    }
-  } else {
-    console.log('Invalid email address');
-    errorMessage.value = 'Invalid email address'; // Error handling for invalid email
+
+  if (!emailRegex.test(query)) {
+    errorMessage.value = 'Invalid email address';
+    return;
+  }
+
+  const response: any = await $fetch(`/api/xposedornot?email=${query}`,
+    { ignoreResponseError: true }
+  );
+
+  breachResponse.value = response;
+  if (response.statusCode && response.statusCode !== 200) {
+    errorMessage.value = response.message || 'Failed to check for breaches';
   }
 };
 
 const searchResults = async () => {
-  const query = textbox.value;
-  console.log('searchResults');
-  try {
-    errorMessage.value = '';
-
-    if (!query) {
-      console.log('empty');
-      errorMessage.value = "Please input something";
-      return;
-    }
-    checkEmail(query);
-
-    // Proceed with regular search logic
-    const searchQuery = `q=${encodeURIComponent(query)}`;
-
-    let googleData = await $fetch<SearchApiResponse>(`/api/googlefake?${searchQuery}`);
-    googleData.items = googleData.items.filter((item) => item.title && item.link)
-      .map((item) => ({
-        ...item,
-        apiSource: 'Google'
-      }));
-
-    let serpapiData = await $fetch<SearchApiResponse>(`/api/serpapifake?${searchQuery}`);
-    serpapiData.items = serpapiData.items.filter((item) => item.title && item.link)
-      .map((item) => ({
-        ...item,
-        apiSource: 'Yahoo'
-      }));
-
-    responseRef.value = {
-      items: [...googleData.items, ...serpapiData.items],
-      queries: {
-        request: [
-          {
-            title: `Combined search for ${query}`,
-            searchTerms: query,
-          },
-        ],
-      },
-    };
-
-    nextTick(() => {
-      if (resultsSection.value) {
-        resultsSection.value.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-
-  } catch (error) {
-    console.error("Failed to get search results:", error);
+  const query = emailInput.value;
+  if (!query) {
+    errorMessage.value = "Please input something";
+    return;
   }
+  // Proceed with regular search logic
+  const searchQuery = `q=${encodeURIComponent(query)}`;
+  const [googleData, serpapiData] = await Promise.all([
+    $fetch<SearchApiResponse>(`/api/googlefake?${searchQuery}`),
+    $fetch<SearchApiResponse>(`/api/serpapifake?${searchQuery}`),
+    checkEmail(query)
+  ]);
+
+  searchAPIResponseRef.value = {
+    items: [
+      ...mapResults(googleData, "Google"),
+      ...mapResults(serpapiData, "Yahoo")
+    ],
+  };
+
+  nextTick(() => {
+    resultsSection.value?.scrollIntoView({ behavior: 'smooth' });
+  });
 };
 
+const mapResults = (response: any, apiSource: any) => {
+  return response.items.map((item: any) => ({
+    title: item.title,
+    link: item.link,
+    apiSource
+  }));
+}
 </script>
 
 <template>
   <div class="relative flex flex-col justify-center min-h-screen">
-    <NetworkAnimation containerClass="absolute top-0 left-0 w-full h-full z-0 opacity-50"
-      :containerHeight="containerHeight" :speedFactor="0.5" :numPoints="100" :maxDistance="100" />
+    <NetworkAnimation containerClass="absolute top-0 left-0 w-full h-full z-0 opacity-50" containerHeight="100%"
+      :speedFactor="0.5" :numPoints="100" :maxDistance="100" />
     <!-- Background Image -->
     <NuxtImg src="/headedit.png" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       style="width: 600px; position: absolute;" />
 
     <div class="relative z-10 flex flex-col items-start justify-center h-full mt-20">
-      <div class="  font-orbiton text-white text-5xl mb-4 text-left w-full max-w-lg ml-36 mt-[-50vh]">
+      <div class="font-orbiton text-white text-5xl mb-4 text-left w-full max-w-lg ml-36 mt-[-50vh]">
         <h1 class="font-semibold">
           Control your online life
         </h1>
@@ -130,9 +96,10 @@ const searchResults = async () => {
         </p>
       </div>
       <div class="flex items-center mt-20 mb-4 w-full  ml-36" style="width: 480px;">
-        <UInput class="border rounded-l-2xl border-orange-500 w-full" color="gray" variant="outline" v-model="textbox" @keyup.enter="searchResults"
+        <UInput class="border rounded-l-2xl border-orange-500 w-full" color="gray" variant="outline"
+          v-model="emailInput" @keyup.enter="searchResults"
           style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-top-left-radius:20rem; border-bottom-left-radius: 20rem;" />
-        <UButton color="white" variant="solid" 
+        <UButton color="white" variant="solid"
           class="rounded-l-none dark:hover:bg-orange-500 border border-orange-500 rounded-r-2xl"
           style="border-top-right-radius:20rem; border-bottom-right-radius: 20rem;" @click="searchResults()">
           Search
@@ -142,41 +109,43 @@ const searchResults = async () => {
   </div>
 
   <!-- Search results section -->
-  <div v-if="responseRef" ref="resultsSection"
+  <div v-if="searchAPIResponseRef" ref="resultsSection"
     class="relative w-full mt-8 bg-gradient-to-b from-zinc-950 from-1% to-zinc-600">
-    <div ref="resultsContainer" class="relative">
-      <NetworkAnimation containerClass="absolute top-0 left-0 w-full h-full z-0 opacity-100"
-        :containerHeight="containerHeight" :speedFactor="2" :numPoints="400" />
+    <div ref="resultsContainer">
+      <NetworkAnimation containerClass="absolute top-0 left-0 w-full h-full z-0 opacity-100" containerHeight="100%"
+        :speedFactor="1" :numPoints="400" />
 
       <!-- Search results content -->
-      <div class="relative z-10 space-y-4 p-6">
-        <div v-for="item in responseRef.items" :key="item.link"
-          class="bg-white bg-opacity-90 rounded-lg shadow-md p-4 max-w-2xl mx-auto">
-          <h3 class="font-semibold text-lg mb-2 text-gray-800">{{ item.title }}</h3>
-          <p class="text-sm text-gray-600 mb-2">Source: {{ item.apiSource }}</p>
-          <NuxtLink :to="item.link" target="_blank" external class="text-blue-500 hover:underline">
-            {{ item.link }}
-          </NuxtLink>
+      <div class="flex flex-wrap  p-24 ">
+        <!-- Left Column -->
+        <div class="relative z-10 space-y-4 flex-1 p-6">
+          <div v-for="item in searchAPIResponseRef.items" :key="item.link"
+            class="bg-white bg-opacity-90 rounded-lg shadow-md p-4 max-w-2xl">
+            <h3 class="font-semibold text-lg mb-2 text-gray-800">{{ item.title }}</h3>
+            <p class="text-sm text-gray-600 mb-2">Source: {{ item.apiSource }}</p>
+            <NuxtLink :to="item.link" target="_blank" external class="text-blue-500 hover:underline">
+              {{ item.link }}
+            </NuxtLink>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <!-- <div class="w-full md:w-[700px] p-8 bg-white bg-opacity-90 rounded-lg shadow-md text-gray-600"> -->
+          <!-- <h3>Data Breach Information</h3> -->
+          <div class="relative z-10 space-y-4 flex-1 p-6">
+          <div v-for="(breach, index) in breachResponse?.breaches[0]" :key="index"
+          class="bg-white text-black bg-opacity-90 rounded-lg shadow-md p-4">
+            <h3>{{ breach }}</h3>
+          </div>
+
+          
+          <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+
+          <!-- Show error message or placeholder if no breaches found -->
+          <!-- <p v-else class="text-gray-600">Enter an email to check for breaches.</p> -->
+        </div>
         </div>
       </div>
     </div>
-  </div>
-
-  <!-- Right Column for Breach Information -->
-  <div class="w-full md:w-[300px] p-6 bg-white bg-opacity-90 rounded-lg shadow-md text-gray-600">
-    <h3>Data Breach Information</h3>
-
-    <!-- Loop through breaches if available -->
-    <div v-if="breachResponse && breachResponse.breaches[0]" v-for="(breach, index) in breachResponse.breaches[0]"
-      :key="index">
-      <h3>{{ breach }}</h3>
-    </div>
-    <!-- Show error message or placeholder if no breaches found -->
-    <p v-else-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
-    <p v-else class="text-gray-600">Enter an email to check for breaches.</p>
-  </div>
+  <!-- </div> -->
 </template>
-
-
-
-<style></style>

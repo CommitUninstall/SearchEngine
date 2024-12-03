@@ -13,6 +13,7 @@
     "@nuxt/image": "^1.8.1",
     "@nuxt/ui": "^2.18.7",
     "@nuxtjs/google-fonts": "^3.2.0",
+    "discord.js": "^14.16.3",
     "haveibeenpwned": "^1.1.0",
     "nuxt": "^3.13.0",
     "p5": "^1.11.1",
